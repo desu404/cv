@@ -39,7 +39,8 @@ combine (r:rs) = f <$> r <*> combine rs
 name = tex "name"
 address = tex "address"
 email e = address e e
-github g = address g g 
+github g = address g g
+br = pure "\\\\"
 
 section :: _ -> _ -> [Resume] -> Resume
 section r e p = do
@@ -58,6 +59,13 @@ subsection r e p = do
         "\\begin{rSubsection}{" <> t <> "}"
         <> body <> "\n"
         <> "\\end{rSubsection}"
+
+tabular p = do
+    body <- combine p
+    return $
+        "\\begin{tabular}{@{} >{\\bfseries}l @{\\hspace{6ex}} l @{}}\n"
+        <> body <> "\n"
+        <> "\\end{tabular}"
 
 header :: _ -> _ -> Resume
 header r e = do
@@ -84,7 +92,7 @@ resume =
       , nsu
       , pure "\\hfill \\textit"
       , header "Сент. 2022 - Сейчас" "Sep. 2022 - Present"
-      , pure "\\\\"
+      , br
       , en "Bachelor student in mathematics"
       , ru "Бакалавр по специальности Математика"
     ]
@@ -96,11 +104,73 @@ resume =
             header "Ноябрь 2022 - Сейчас" "Nov. 2022 - Present"
           , header "Junior Elixir Developer" "Junior Elixir Developer"
           , pure "{}"
-          , en "\\item Software Defined Network application, server side."
-          , ru "\\item Программно определяемая сеть, серверная часть."
-          , en "\\item Web application integrated with an AppFolio API, server side."
-          , ru "\\item Веб приложение с AppFolio API, серверная часть."
-        ]
+          , item "Программно определяемая сеть, серверная часть." 
+                 "Software Defined Network application, server side."
+          , item "Веб приложение с AppFolio API, серверная часть."
+                 "Web application integrated with an AppFolio API, server side."
+      ]
+    ]
+
+-- | Skills section
+    , section "Навыки" "Skills" [
+        pure " "
+      , tabular [
+            en "Main Languages & Haskell, Elixir, Go, C"
+          , ru "Основные языки & Haskell, Elixir, Go, C"
+          , br
+          , en "Comfortable with & C++, Vala, Python, Shell"
+          , ru "Имею опыт & C++, Vala, Python, Shell"
+          , br
+          , en "Technologies & Unix, REST, HTTP, GTK-3, OTP, MACID"
+          , ru "Технологии & Unix, REST, HTTP, GTK-3, OTP, MACID"
+          , br
+          , en "Tools & Postman, Swagger, Git, CMake, $\\mbox{\\LaTeX}$, Reduce"
+          , ru "Инструменты & Postman, Swagger, Git, CMake, $\\mbox{\\LaTeX}$, Reduce"
+          , br
+          , en "Other & Rich expirience in Algorithms and Data Structures."
+          , ru "Другое & Хорошо ориентируюсь в алгоритмах и структурах данных."
+      ]
+    ]
+
+-- | Languages section
+    , section "Языки" "Languages" [
+        pure " "
+      , tabular [
+            en "Russian & Native"
+          , ru "Русский & Носитель"
+          , br
+          , en "English & Upper-Intermidate, B2"
+          , ru "Английский & Upper-Intermidate, B2"
+          , br
+          , en "French, German & Elementary, A2"
+          , ru "Французский, Немецкий & Elementary, A2"
+      ]
+    ]
+
+-- | CP section
+    , section "Олимпиадное программирование" "Competitive programming" [
+        pure " "
+      -- | ROI
+      , subsection "ВсОШ по информатике, 11ый класс"
+                   "Russian Olympiad in Informatics" [
+            pure "{2021 - 2022}{}{}"
+          , item "Третье место на региональном этапе, призёр."
+                 "3rd place in the Regional stage, winner."
+      ]
+      -- | Other
+      , subsection "Призёр отборочного этапа, финалист"
+                   "Qualifying stage winner, final stage participant" [
+            pure "{2021 - 2022}"
+          , en "{11th grade}{}"
+          , ru "{11ый класс}{}"
+          , item "Олимпида СПбГУ по информатике" "SpbSU Olympiad in Informatics"
+          , item "Всесибирская Открытая Олимпиада школьников по информатике"
+                 "All-Siberian Olympiad in Informatics"
+          , item "Олимпиада ВШЭ по инфрматике" "HSE Olympiad in Informatics"
+          , item "Шаг в будущее (МГТУ им. Баумана)" "BMSTU Programming Olympiad"
+          , item "Когнитивные технологии (МИСиС)"
+                 "MISIS Programming Olympiad (Cognitive Technology)"
+      ]
     ]
 
 -- | End
