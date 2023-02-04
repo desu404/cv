@@ -7,7 +7,7 @@ Haskell script for generating LaTeX resume on both Russian and English.
 Install Haskell stack and run:
 
 ```bash
-$ git clone https://github.com/desu404/cv.git && cd cv
+$ git clone https://github.com/eloczka/cv.git && cd cv
 $ stack build && stack install
 $ resume-exe en > latex/output.tex
 ```
