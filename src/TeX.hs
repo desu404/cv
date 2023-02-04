@@ -82,7 +82,7 @@ resume =
     , name "Y. B." "Y. B."
     , address "Новосибирск, Россия" "Novosibirsk, Russia"
     , email "+7 (***) *** ** ** \\\\ nn@gmail.com"
-    , github "Github: @desu404"
+    , github "Github: @eloczka"
 
     , pure "\\begin{document}"
 
